@@ -1,0 +1,357 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://MainTheme.tres" type="Theme" id=1]
+[ext_resource path="res://scenes/FontEditor.gd" type="Script" id=2]
+[ext_resource path="res://examples/neverspring.png" type="Texture" id=3]
+[ext_resource path="res://data/TexOverlayDraw.gd" type="Script" id=4]
+
+[node name="FontEditor" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="charNamePopup" type="PopupDialog" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+rect_min_size = Vector2( 480, 160 )
+
+[node name="CenterContainer" type="CenterContainer" parent="charNamePopup"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="charNamePopup/CenterContainer"]
+margin_left = 398.0
+margin_top = 239.0
+margin_right = 612.0
+margin_bottom = 346.0
+
+[node name="Label" type="Label" parent="charNamePopup/CenterContainer/VBoxContainer"]
+margin_right = 432.0
+margin_bottom = 79.0
+text = "Enter glyph...
+(Example: A)"
+align = 1
+valign = 1
+
+[node name="charIdLineEdit" type="LineEdit" parent="charNamePopup/CenterContainer/VBoxContainer"]
+margin_top = 83.0
+margin_right = 432.0
+margin_bottom = 107.0
+text = "0"
+align = 1
+max_length = 1
+
+[node name="MainFD" type="FileDialog" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1025.0
+margin_bottom = 605.0
+window_title = "Open a File"
+mode = 0
+access = 2
+show_hidden_files = true
+
+[node name="TextureNotice" type="CenterContainer" parent="."]
+visible = false
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureNotice"]
+margin_left = 266.0
+margin_top = 250.0
+margin_right = 743.0
+margin_bottom = 336.0
+
+[node name="Label" type="Label" parent="TextureNotice/VBoxContainer"]
+margin_right = 477.0
+margin_bottom = 38.0
+text = "Add a texture to start editing."
+
+[node name="LoadTexBt" type="Button" parent="TextureNotice/VBoxContainer"]
+margin_top = 42.0
+margin_right = 477.0
+margin_bottom = 86.0
+text = "Add texture"
+
+[node name="MainContainer" type="PanelContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1025.0
+margin_bottom = 605.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1011.0
+margin_bottom = 591.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainContainer/VBoxContainer"]
+margin_right = 1004.0
+margin_bottom = 500.0
+custom_constants/separation = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/VBoxContainer/HBoxContainer"]
+margin_right = 500.0
+margin_bottom = 500.0
+
+[node name="CharList" type="ItemList" parent="MainContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_right = 500.0
+margin_bottom = 440.0
+rect_min_size = Vector2( 500, 440 )
+
+[node name="PanelContainer" type="PanelContainer" parent="MainContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 444.0
+margin_right = 500.0
+margin_bottom = 496.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MainContainer/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 493.0
+margin_bottom = 45.0
+size_flags_vertical = 2
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainContainer/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/HBoxContainer3"]
+margin_left = 57.0
+margin_right = 235.0
+margin_bottom = 38.0
+
+[node name="Label2" type="Label" parent="MainContainer/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/HBoxContainer3/HBoxContainer"]
+modulate = Color( 0.505882, 0.505882, 0.505882, 1 )
+margin_right = 116.0
+margin_bottom = 38.0
+text = "Height "
+
+[node name="FontHeight" type="LineEdit" parent="MainContainer/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/HBoxContainer3/HBoxContainer"]
+margin_left = 120.0
+margin_right = 178.0
+margin_bottom = 38.0
+text = "0"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MainContainer/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/HBoxContainer3"]
+margin_left = 239.0
+margin_right = 428.0
+margin_bottom = 38.0
+
+[node name="Label2" type="Label" parent="MainContainer/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/HBoxContainer3/HBoxContainer2"]
+modulate = Color( 0.505882, 0.505882, 0.505882, 1 )
+margin_right = 127.0
+margin_bottom = 38.0
+text = "Spacing"
+
+[node name="CharSpacing" type="LineEdit" parent="MainContainer/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/HBoxContainer3/HBoxContainer2"]
+margin_left = 131.0
+margin_right = 189.0
+margin_bottom = 38.0
+hint_tooltip = "Number in pixels that the character will occupy horizontally.
+
+-1 means that the character will advance the same amount of pixels as it's width."
+text = "-1"
+
+[node name="fntDisplay" type="TextureRect" parent="MainContainer/VBoxContainer/HBoxContainer"]
+margin_left = 504.0
+margin_right = 1004.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 500, 500 )
+texture = ExtResource( 3 )
+expand = true
+script = ExtResource( 4 )
+
+[node name="ColorRect" type="ColorRect" parent="MainContainer/VBoxContainer/HBoxContainer/fntDisplay"]
+show_behind_parent = true
+margin_right = 500.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 500, 500 )
+color = Color( 0, 0, 0, 1 )
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MainContainer/VBoxContainer"]
+margin_top = 504.0
+margin_right = 1004.0
+margin_bottom = 584.0
+
+[node name="AddCharBt" type="Button" parent="MainContainer/VBoxContainer/HBoxContainer2"]
+margin_right = 171.0
+margin_bottom = 80.0
+text = "Add glyph"
+
+[node name="SaveBt" type="Button" parent="MainContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 175.0
+margin_right = 416.0
+margin_bottom = 80.0
+text = "Export & Save"
+
+[node name="Label" type="Label" parent="MainContainer/VBoxContainer/HBoxContainer2"]
+modulate = Color( 0.505882, 0.505882, 0.505882, 1 )
+margin_left = 420.0
+margin_top = 21.0
+margin_right = 475.0
+margin_bottom = 59.0
+text = "Pos"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 479.0
+margin_right = 588.0
+margin_bottom = 80.0
+custom_constants/separation = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer"]
+margin_right = 109.0
+margin_bottom = 80.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer/VBoxContainer"]
+margin_right = 109.0
+margin_bottom = 38.0
+
+[node name="Label" type="Label" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer/VBoxContainer/HBoxContainer"]
+margin_right = 43.0
+margin_bottom = 38.0
+text = "X: "
+
+[node name="CharPosX" type="LineEdit" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer/VBoxContainer/HBoxContainer"]
+margin_left = 47.0
+margin_right = 105.0
+margin_bottom = 38.0
+text = "0"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer/VBoxContainer"]
+margin_top = 42.0
+margin_right = 109.0
+margin_bottom = 80.0
+
+[node name="Label" type="Label" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer/VBoxContainer/HBoxContainer2"]
+margin_right = 47.0
+margin_bottom = 38.0
+text = "Y:  "
+
+[node name="CharPosY" type="LineEdit" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 51.0
+margin_right = 109.0
+margin_bottom = 38.0
+text = "0"
+
+[node name="Label2" type="Label" parent="MainContainer/VBoxContainer/HBoxContainer2"]
+modulate = Color( 0.505882, 0.505882, 0.505882, 1 )
+margin_left = 592.0
+margin_top = 21.0
+margin_right = 658.0
+margin_bottom = 59.0
+text = "Size"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MainContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 662.0
+margin_right = 771.0
+margin_bottom = 80.0
+custom_constants/separation = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer2"]
+margin_right = 109.0
+margin_bottom = 80.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer2/VBoxContainer"]
+margin_right = 109.0
+margin_bottom = 38.0
+
+[node name="Label" type="Label" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer2/VBoxContainer/HBoxContainer"]
+margin_right = 43.0
+margin_bottom = 38.0
+text = "X: "
+
+[node name="CharSizeX" type="LineEdit" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer2/VBoxContainer/HBoxContainer"]
+margin_left = 47.0
+margin_right = 105.0
+margin_bottom = 38.0
+text = "0"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer2/VBoxContainer"]
+margin_top = 42.0
+margin_right = 109.0
+margin_bottom = 80.0
+
+[node name="Label" type="Label" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer2/VBoxContainer/HBoxContainer2"]
+margin_right = 47.0
+margin_bottom = 38.0
+text = "Y:  "
+
+[node name="CharSizeY" type="LineEdit" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer2/VBoxContainer/HBoxContainer2"]
+margin_left = 51.0
+margin_right = 109.0
+margin_bottom = 38.0
+text = "0"
+
+[node name="Label3" type="Label" parent="MainContainer/VBoxContainer/HBoxContainer2"]
+modulate = Color( 0.505882, 0.505882, 0.505882, 1 )
+margin_left = 775.0
+margin_top = 21.0
+margin_right = 872.0
+margin_bottom = 59.0
+text = "Offset"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MainContainer/VBoxContainer/HBoxContainer2"]
+margin_left = 876.0
+margin_right = 985.0
+margin_bottom = 80.0
+custom_constants/separation = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer3"]
+margin_right = 109.0
+margin_bottom = 80.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer3/VBoxContainer"]
+margin_right = 109.0
+margin_bottom = 38.0
+
+[node name="Label" type="Label" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer3/VBoxContainer/HBoxContainer"]
+margin_right = 43.0
+margin_bottom = 38.0
+text = "X: "
+
+[node name="CharOffsetX" type="LineEdit" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer3/VBoxContainer/HBoxContainer"]
+margin_left = 47.0
+margin_right = 105.0
+margin_bottom = 38.0
+text = "0"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer3/VBoxContainer"]
+margin_top = 42.0
+margin_right = 109.0
+margin_bottom = 80.0
+
+[node name="Label" type="Label" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer3/VBoxContainer/HBoxContainer2"]
+margin_right = 47.0
+margin_bottom = 38.0
+text = "Y:  "
+
+[node name="CharOffsetY" type="LineEdit" parent="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer3/VBoxContainer/HBoxContainer2"]
+margin_left = 51.0
+margin_right = 109.0
+margin_bottom = 38.0
+text = "0"
+
+[node name="NoGlyphDialog" type="AcceptDialog" parent="."]
+margin_left = 351.0
+margin_top = 253.0
+margin_right = 680.0
+margin_bottom = 359.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+window_title = "Error"
+dialog_text = "Glyph list is empty!"
+
+[connection signal="pressed" from="TextureNotice/VBoxContainer/LoadTexBt" to="." method="_on_LoadTexBt_pressed"]
+[connection signal="item_selected" from="MainContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharList" to="." method="_on_CharList_item_selected"]
+[connection signal="text_entered" from="MainContainer/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/HBoxContainer3/HBoxContainer/FontHeight" to="." method="_on_FontHeight_text_entered"]
+[connection signal="text_entered" from="MainContainer/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/HBoxContainer3/HBoxContainer2/CharSpacing" to="." method="_on_CharSpacing_text_entered"]
+[connection signal="pressed" from="MainContainer/VBoxContainer/HBoxContainer2/AddCharBt" to="." method="_on_AddCharBt_pressed"]
+[connection signal="pressed" from="MainContainer/VBoxContainer/HBoxContainer2/SaveBt" to="." method="_on_SaveBt_pressed"]
+[connection signal="text_entered" from="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer/VBoxContainer/HBoxContainer/CharPosX" to="." method="_on_CharPosX_text_entered"]
+[connection signal="text_entered" from="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer/VBoxContainer/HBoxContainer2/CharPosY" to="." method="_on_CharPosY_text_entered"]
+[connection signal="text_entered" from="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer2/VBoxContainer/HBoxContainer/CharSizeX" to="." method="_on_CharSizeX_text_entered"]
+[connection signal="text_entered" from="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer2/VBoxContainer/HBoxContainer2/CharSizeY" to="." method="_on_CharSizeY_text_entered"]
+[connection signal="text_entered" from="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer3/VBoxContainer/HBoxContainer/CharOffsetX" to="." method="_on_CharOffsetX_text_entered"]
+[connection signal="text_entered" from="MainContainer/VBoxContainer/HBoxContainer2/HBoxContainer3/VBoxContainer/HBoxContainer2/CharOffsetY" to="." method="_on_CharOffsetY_text_entered"]
